@@ -196,7 +196,7 @@ function inverseLabrouchere(){
     my_sequence=(${my_sequence[@]})
 
     echo -ne "\n${yellowColour}[+]${grayColour} Invertimos ${yellowColour}${bet}€${grayColour} y nuestra secuencia se queda en [${my_sequence[@]}] ${endColour}"
-    echo -ne "\n${yellowColour}[+]${grayColour} Tenemos ${yellowColour}${money}€ "
+    echo -ne "\n${yellowColour}[+]${grayColour} Tenemos ${yellowColour}${money}€ \n"
 
     tput civis
     while true; do
@@ -205,7 +205,11 @@ function inverseLabrouchere(){
 
         if [ "$par_impar" == "par" ]; then
             if [ "$(($random_number % 2))" -eq 0 ]; then
-                echo -e "\n${yellowColour}[+]${grayColour} El numero es par ¡ Ganas !${endColour}"
+                echo -e "${yellowColour}[+]${grayColour} El numero es par ¡ Ganas !${endColour}"
+                # cuando ganas recuperas apuesta * 2
+                reward=$(($bet * 2))
+                let money+=${reward}
+                echo -ne "${yellowColour}[+]${grayColour} Tienes ${yellowColour}${money}€ \n"
             else
                 echo -e "\n${redColour}[!]${grayColour} El numero es impar ¡ Pierdes !${endColour}"
             fi    
