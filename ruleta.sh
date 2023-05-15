@@ -1,6 +1,6 @@
 #! /bin/bash
 
-set -euo pipefail
+#set -euo pipefail
 
 # Colours
 greenColour="\e[0;32m\033[1m"
@@ -206,11 +206,11 @@ function inverseLabrouchere(){
             if [ "$(($random_number % 2))" -eq 0 ]; then
                 echo -e "\n${yellowColour}[+]${grayColour} El numero es par ¡ Ganas !${endColour}"
             else
-                echo -e "\n${redColour}[+]${grayColour} El numero es impar ¡ Pierdes !${endColour}"
+                echo -e "\n${redColour}[!]${grayColour} El numero es impar ¡ Pierdes !${endColour}"
             fi    
         fi
         
-        sleep 5
+        sleep 2
     done
     tput cnorm
 }
@@ -235,7 +235,7 @@ done
 
 
 
-#echo -e ">>> ${money} et ${technique} \n"
+echo -e ">>> ${money} et ${technique} \n"
 
 if [ $money ] && [ $technique ]; then
     
@@ -247,7 +247,7 @@ if [ $money ] && [ $technique ]; then
 
         if [[ "$technique" == "martingala" ]]; then
            #echo -e "SE TENSO con la martingala !"
-           martingala $technique $money
+            martingala $technique $money
         elif [[ "$technique" == "inverseLabrouchere" ]]; then
             #echo -e "SE TENSO con inverseLabrouchere !"
             inverseLabrouchere $technique $money
