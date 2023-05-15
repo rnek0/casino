@@ -1,6 +1,6 @@
 #! /bin/bash
 
-#set -euo pipefail
+set -euo pipefail
 
 # Colours
 greenColour="\e[0;32m\033[1m"
@@ -189,13 +189,14 @@ function inverseLabrouchere(){
     echo -ne "${yellowColour}[+]${grayColour} Comenzamos con la secuencia [${my_sequence[@]}] ${endColour}"
 
     bet=$((${my_sequence[0]} + ${my_sequence[-1]}))
-
+    money=$(($money - ${bet}))
 
     unset my_sequence[0]
     unset my_sequence[-1]
     my_sequence=(${my_sequence[@]})
 
     echo -ne "\n${yellowColour}[+]${grayColour} Invertimos ${yellowColour}${bet}€${grayColour} y nuestra secuencia se queda en [${my_sequence[@]}] ${endColour}"
+    echo -ne "\n${yellowColour}[+]${grayColour} Tenemos ${yellowColour}${money}€ "
 
     tput civis
     while true; do
