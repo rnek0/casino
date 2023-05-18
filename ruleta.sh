@@ -186,38 +186,37 @@ function inverseLabrouchere(){
     echo -e "\n${yellowColour}[+]${grayColour} Dinero actual:${yellowColour} $money € ${endColour}\n "
     echo -ne "${yellowColour}[?]${grayColour} A que deseas apostar continuamente (par/impar)? -> ${endColour}" && read par_impar
 
-    echo -ne "${yellowColour}[+]${grayColour} Comenzamos con la secuencia [${my_sequence[@]}] ${endColour}"
+    echo -ne "\n${yellowColour}[+]${grayColour} Comenzamos con la secuencia [${my_sequence[@]}] ${endColour}"
 
     bet=$((${my_sequence[0]} + ${my_sequence[-1]}))
-    money=$(($money - ${bet}))
-
-    #unset my_sequence[0]
-    #unset my_sequence[-1]
-    my_sequence=(${my_sequence[@]})
-
-    echo -ne "\n${yellowColour}[+]${grayColour} Invertimos ${yellowColour}${bet}€${grayColour} y nuestra secuencia se queda en [${my_sequence[@]}] ${endColour}"
-    echo -ne "\n${yellowColour}[+]${grayColour} Tenemos ${yellowColour}${money}€ \n"
 
     tput civis
     while true; do
-
+        
         random_number=$(($RANDOM % 37))
-        # test random_number == 0
+        # test con random_number == par
+        #random_number=2
+
+        # test con random_number == 0
         #random_number=0
-    
+
+        # Apostamos la suma de los extremos
+        bet=$((${my_sequence[0]} + ${my_sequence[-1]}))
+        money=$(($money - ${bet}))
+
+        # JEU
         echo -e "\n${yellowColour}[+]${grayColour} Ha salido el numero ${random_number}"
-
         if [ "$par_impar" == "par" ]; then
-
             if [ "$(($random_number % 2))" -eq 0 ] && [ "${random_number}" -ne 0  ]; then
+                echo -e "${yellowColour}[-]${grayColour} Apostamos $bet ! y te queda ${greenColour}${money}${endColour}"
 
-                echo -e "${yellowColour}[+]${grayColour} El numero es par ¡ Ganas !${endColour}"
                 # cuando ganas recuperas apuesta * 2 y la secuencia tiene +1
                 reward=$(($bet * 2))
                 let money+=${reward}
 
+                echo -e "${yellowColour}[+]${grayColour} El numero es par ¡ Ganas $reward !${endColour}"
+
                 num=$((${my_sequence[-1]}+1))
-                #echo ">>> ${num}"
                 my_sequence+=(${num})
 
                 echo -ne "${yellowColour}[+]${grayColour} Nuestra nueva secuencia es [${my_sequence[@]}]\n"
@@ -233,7 +232,6 @@ function inverseLabrouchere(){
     done
     tput cnorm
 }
-
 
 # sleep 5
 
